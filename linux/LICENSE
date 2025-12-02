@@ -1,0 +1,43 @@
+Freedom or Nothing License
+Version 1.1
+Copyright © 2026 web-pentest.
+
+1. Definitions
+  1.1 "Software" means the source code, object code, and any accompanying documentation originally licensed under this agreement.
+  1.2 "Derivative Work" means any modification, adaptation, or work that combines the Software with other material in a way that would require permission under copyright law.
+  1.3 "Distribute" means any act of sharing, publishing, or making the Software available to third parties, including but not limited to:
+    - Selling or offering for download
+    - Deploying as part of a SaaS (Software as a Service) product
+    - Bundling with proprietary software
+
+2. Permissions
+  2.1 You are granted the following irrevocable rights:
+    - To use the Software for any purpose, including commercial use.
+    - To modify the Software and create Derivative Works.
+    - To distribute verbatim or modified copies under the conditions in Section 3 (Copyleft Obligations).
+
+3. Copyleft Obligations
+  3.1 If you Distribute the Software or a Derivative Work, you must:
+    - Provide complete corresponding source code for the entire work.
+    - License the entire work under FoN—no alternative licensing is permitted.
+    - Include this license and all original copyright notices.
+    - Make the source code freely accessible to all recipients (e.g., via public repository or written offer).
+  3.2 No Proprietary Linking:
+    - If the Software is integrated into a larger system, the entire system must comply with FoN if distributed externally.
+
+4. Warranty and Liability
+  4.1 No Warranty:
+    - The Software comes with ABSOLUTELY NO WARRANTY, to the extent permitted by applicable law.
+  4.2 Limitation of Liability:
+    - Under no circumstances shall the authors be liable for damages (direct, indirect, or consequential) arising from the use of this Software.
+
+5. Patent and Trademark
+  5.1 Patent Grant:
+    - If you hold patents covering the Software, you grant users a royalty-free, worldwide license to those patents.
+  5.2 Trademark Restrictions:
+    - You may not use the original authors' names, logos, or project names to endorse Derivative Works without explicit permission.
+
+6. Legal Provisions
+  6.1 Severability: If any clause is deemed unenforceable, the rest remain valid.
+  6.2 Governing Law: This license is governed by the laws of the State of California.
+  6.3 No Waiver: Failure to enforce a provision does not waive future enforcement.
