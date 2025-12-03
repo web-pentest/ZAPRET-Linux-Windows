@@ -32,7 +32,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/web-pentest/ZAPRET-Linux-W
 ```
 
 ### Windows
-Откройте папку с Виндой которую вы скачали и откройте degenerat.bat, всё.
+Откройте папку с Виндой которую вы скачали и откройте general.bat, всё.
 
 ---
 
