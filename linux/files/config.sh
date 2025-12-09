@@ -91,7 +91,7 @@ cur_conf() {
         TEMP_CUR_STR=$(mktemp -d)
         cp -r /opt/zapret/config $TEMP_CUR_STR/config
         sed -i "s/^FWTYPE=.*/FWTYPE=iptables/" $TEMP_CUR_STR/config
-        for file in /opt/zapret/zapret.cfgs/configurations/*; do
+        for file in /opt/zapret/zapret-conf/configurations/*; do
             if [[ -f "$file" && "$(sha256sum "$file" | awk '{print $1}')" == "$(sha256sum $TEMP_CUR_STR/config | awk '{print $1}')" ]]; then
                 cr_cnf="$(basename "$file")"
                 break
@@ -103,7 +103,7 @@ cur_conf() {
 cur_list() {
     cr_lst="неизвестно"
     if [[ -f /opt/zapret/config ]]; then
-        for file in /opt/zapret/zapret.cfgs/lists/*; do
+        for file in /opt/zapret/zapret-conf/lists/*; do
             if [[ -f "$file" && "$(sha256sum "$file" | awk '{print $1}')" == "$(sha256sum /opt/zapret/ipset/zapret-hosts-user.txt | awk '{print $1}')" ]]; then
                 cr_lst="$(basename "$file")"
                 break
@@ -116,7 +116,7 @@ configure_zapret_conf() {
     if [[ ! -d /opt/zapret/zapret.cfgs ]]; then
         echo -e "\e[35mКлонирую конфигурации...\e[0m"
         manage_service stop
-        git clone https://github.com/Snowy-Fluffy/zapret.cfgs /opt/zapret/zapret.cfgs
+        git clone https://github.com/web-pentest/zapret-conf /opt/zapret/zapret-conf
         echo -e "\e[32mКлонирование успешно завершено.\e[0m"
         manage_service start
         sleep 2
@@ -124,7 +124,7 @@ configure_zapret_conf() {
     if [[ -d /opt/zapret/zapret.cfgs ]]; then
         echo "Проверяю наличие на обновление конфигураций..."
         manage_service stop 
-        cd /opt/zapret/zapret.cfgs && git fetch origin main; git reset --hard origin/main
+        cd /opt/zapret/zapret-conf && git fetch origin main; git reset --hard origin/main
         manage_service start
         sleep 2
     fi
@@ -134,11 +134,11 @@ configure_zapret_conf() {
     echo "Выберите стратегию (можно поменять в любой момент, запустив Меню управления запретом еще раз):"
     PS3="Введите номер стратегии (по умолчанию 'general'): "
 
-    select CONF in $(for f in /opt/zapret/zapret.cfgs/configurations/*; do echo "$(basename "$f" | tr ' ' '.')"; done) "Отмена"; do
+    select CONF in $(for f in /opt/zapret/zapret-conf/configurations/*; do echo "$(basename "$f" | tr ' ' '.')"; done) "Отмена"; do
         if [[ "$CONF" == "Отмена" ]]; then
             main_menu
         elif [[ -n "$CONF" ]]; then
-            CONFIG_PATH="/opt/zapret/zapret.cfgs/configurations/${CONF//./ }"
+            CONFIG_PATH="/opt/zapret/zapret-conf/configurations/${CONF//./ }"
             rm -f /opt/zapret/config
             cp "$CONFIG_PATH" /opt/zapret/config || error_exit "не удалось скопировать стратегию"
             echo "Стратегия '$CONF' установлена."
@@ -157,18 +157,18 @@ configure_zapret_conf() {
 }
 
 configure_zapret_list() {
-    if [[ ! -d /opt/zapret/zapret.cfgs ]]; then
+    if [[ ! -d /opt/zapret/zapret-conf ]]; then
         echo -e "\e[35mКлонирую конфигурации...\e[0m"
         manage_service stop
-        git clone https://github.com/Snowy-Fluffy/zapret.cfgs /opt/zapret/zapret.cfgs
+        git clone https://github.com/web-pentest/zapret-conf /opt/zapret/zapret-conf
         manage_service start
         echo -e "\e[32mКлонирование успешно завершено.\e[0m"
         sleep 2
     fi
-    if [[ -d /opt/zapret/zapret.cfgs ]]; then
+    if [[ -d /opt/zapret/zapret-conf ]]; then
         echo "Проверяю наличие на обновление конфигураций..."
         manage_service stop
-        cd /opt/zapret/zapret.cfgs && git fetch origin main; git reset --hard origin/main
+        cd /opt/zapret/zapret-conf && git fetch origin main; git reset --hard origin/main
         manage_service start
         sleep 2
     fi
@@ -178,11 +178,11 @@ configure_zapret_list() {
     echo -e "\e[36mВыберите хостлист (можно поменять в любой момент, запустив Меню управления запретом еще раз):\e[0m"
     PS3="Введите номер листа (по умолчанию 'list-basic.txt'): "
 
-    select LIST in $(for f in /opt/zapret/zapret.cfgs/lists/list*; do echo "$(basename "$f")"; done) "Отмена"; do
+    select LIST in $(for f in /opt/zapret/zapret-conf/lists/list*; do echo "$(basename "$f")"; done) "Отмена"; do
         if [[ "$LIST" == "Отмена" ]]; then
             main_menu
         elif [[ -n "$LIST" ]]; then
-            LIST_PATH="/opt/zapret/zapret.cfgs/lists/$LIST"
+            LIST_PATH="/opt/zapret/zapret-conf/lists/$LIST"
             rm -f /opt/zapret/ipset/zapret-hosts-user.txt
             cp "$LIST_PATH" /opt/zapret/ipset/zapret-hosts-user.txt || error_exit "не удалось скопировать хостлист"
             echo -e "\e[32mХостлист '$LIST' установлен.\e[0m"
