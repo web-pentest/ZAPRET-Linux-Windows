@@ -56,7 +56,7 @@ download_zapret()
     mv /opt/zapret-v$(get_latest_version) /opt/zapret
     get_latest_version > /opt/zapret-ver
     echo "Клонирую репозиторий конфигураций..."
-    git clone https://github.com/Snowy-Fluffy/zapret.cfgs /opt/zapret/zapret.cfgs
+    git clone https://github.com/web-pentest/zapret-conf /opt/zapret/zapret-conf
     echo "Клонирование успешно завершено."
 
 
@@ -136,10 +136,10 @@ install_zapret() {
     sed -i '238s/ask_yes_no Y/ask_yes_no N/' /opt/zapret/common/installer.sh
     rm -f /bin/zapret
     rm -f /opt/zapret/config
-    cp -r /opt/zapret/zapret.cfgs/configurations/general /opt/zapret/config || error_exit "не удалось автоматически скопировать конфиг"
+    cp -r /opt/zapret/zapret-conf/configurations/general /opt/zapret/config || error_exit "не удалось автоматически скопировать конфиг"
     rm -f /opt/zapret/ipset/zapret-hosts-user.txt
-    cp -r /opt/zapret/zapret.cfgs/lists/list-basic.txt /opt/zapret/ipset/zapret-hosts-user.txt || error_exit "не удалось автоматически скопировать хостлист"
-    cp -r /opt/zapret/zapret.cfgs/lists/ipset-discord.txt /opt/zapret/ipset/ipset-discord.txt || error_exit "не удалось автоматически скопировать ипсет"
+    cp -r /opt/zapret/zapret-conf/lists/list-basic.txt /opt/zapret/ipset/zapret-hosts-user.txt || error_exit "не удалось автоматически скопировать хостлист"
+    cp -r /opt/zapret/zapret-conf/lists/ipset-discord.txt /opt/zapret/ipset/ipset-discord.txt || error_exit "не удалось автоматически скопировать ипсет"
     ln -s /opt/zapret.installer/zapret-control.sh /bin/zapret || error_exit "не удалось создать символическую ссылку"
     if [[ INIT_SYSTEM = systemd ]]; then
         systemctl daemon-reload
@@ -189,8 +189,8 @@ update_zapret() {
 
 
 
-    if [[ -d /opt/zapret/zapret.cfgs ]]; then
-        cd /opt/zapret/zapret.cfgs && git fetch origin main; git reset --hard origin/main
+    if [[ -d /opt/zapret/zapret-conf ]]; then
+        cd /opt/zapret/zapret-conf && git fetch origin main; git reset --hard origin/main
     fi
     if [[ -d /opt/zapret.installer/ ]]; then
         cd /opt/zapret.installer/ && git fetch origin main; git reset --hard origin/main
@@ -208,10 +208,10 @@ update_zapret() {
     rm -rf $TEMP_DIR_CONF
     rm -rf $TEMP_DIR_BIN
     rm -f /opt/zapret/config
-    cp -r /opt/zapret/zapret.cfgs/configurations/general /opt/zapret/config || error_exit "не удалось автоматически скопировать конфиг"
+    cp -r /opt/zapret/zapret-conf/configurations/general /opt/zapret/config || error_exit "не удалось автоматически скопировать конфиг"
     rm -f /opt/zapret/ipset/zapret-hosts-user.txt
-    cp -r /opt/zapret/zapret.cfgs/lists/list-basic.txt /opt/zapret/ipset/zapret-hosts-user.txt || error_exit "не удалось автоматически скопировать хостлист"
-    cp -r /opt/zapret/zapret.cfgs/lists/ipset-discord.txt /opt/zapret/ipset/ipset-discord.txt || error_exit "не удалось автоматически скопировать ипсет"
+    cp -r /opt/zapret/zapret-conf/lists/list-basic.txt /opt/zapret/ipset/zapret-hosts-user.txt || error_exit "не удалось автоматически скопировать хостлист"
+    cp -r /opt/zapret/zapret-conf/lists/ipset-discord.txt /opt/zapret/ipset/ipset-discord.txt || error_exit "не удалось автоматически скопировать ипсет"
     configure_zapret_conf
     manage_service restart
     bash -c 'read -p "Нажмите Enter для продолжения..."'
@@ -219,8 +219,8 @@ update_zapret() {
 }
 
 update_script() {
-    if [[ -d /opt/zapret/zapret.cfgs ]]; then
-        cd /opt/zapret/zapret.cfgs && git fetch origin main; git reset --hard origin/main
+    if [[ -d /opt/zapret/zapret-conf ]]; then
+        cd /opt/zapret/zapret-conf && git fetch origin main; git reset --hard origin/main
     fi
     if [[ -d /opt/zapret.installer/ ]]; then
         cd /opt/zapret.installer/ && git fetch origin main; git reset --hard origin/main
@@ -232,8 +232,8 @@ update_script() {
 }
 
 update_installed_script() {
-    if [[ -d /opt/zapret/zapret.cfgs ]]; then
-        cd /opt/zapret/zapret.cfgs && git fetch origin main; git reset --hard origin/main
+    if [[ -d /opt/zapret/zapret-conf ]]; then
+        cd /opt/zapret/zapret-conf && git fetch origin main; git reset --hard origin/main
     fi
     if [[ -d /opt/zapret.installer/ ]]; then
         cd /opt/zapret.installer/ && git fetch origin main; git reset --hard origin/main
